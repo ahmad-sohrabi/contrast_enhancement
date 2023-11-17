@@ -2,6 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
+
+def load_image(file_address):
+    my_image = cv.imread(file_address)
+    main_image = cv.cvtColor(my_image, cv.COLOR_BGR2RGB)
+    return main_image
+
+
+def load_image_gray_scale(file_address):
+    my_image = cv.imread(file_address)
+    gray_image = cv.cvtColor(my_image, cv.COLOR_BGR2GRAY)
+    return gray_image
+
+
 def calc_sum(hist, k, total_pixels_number):
     sum = 0
     for i in range(k + 1):
@@ -21,7 +34,11 @@ def calculate_equalized_histogram(histogram, total_pixels_number):
 
 
 def image_crop(image, startPoint, endPoint):
-    cropped_image = image[startPoint[0]:endPoint[0], startPoint[1]:endPoint[1]]
+    shape_length = len(image.shape)
+    if shape_length == 2:
+        cropped_image = image[startPoint[0]:endPoint[0], startPoint[1]:endPoint[1]]
+    else:
+        cropped_image = image[startPoint[0]:endPoint[0], startPoint[1]:endPoint[1], :]
     return cropped_image
 
 
